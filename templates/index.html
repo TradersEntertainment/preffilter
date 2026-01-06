@@ -160,6 +160,10 @@
             <button class="mom-btn yes" onclick="handleMom(true)">YES</button>
             <button class="mom-btn no" onclick="handleMom(false)">NO</button>
         </div>
+        <label
+            style="margin-top: 30px; font-size: 0.8rem; opacity: 0.5; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="dontAskAgain"> dont ask me again
+        </label>
     </div>
 
     <div class="glass-bg"></div>
@@ -566,13 +570,19 @@
         poll();
 
         // Mom-Destroyer Logic
+        if (localStorage.getItem('hideMomModal') === 'true') {
+            document.getElementById('momModal').style.display = 'none';
+        }
+
         let currentQuestion = 1;
         function handleMom(isYes) {
             const questionEl = document.getElementById('momQuestion');
             const btnGroup = document.querySelector('.mom-btns');
+            const dontAsk = document.getElementById('dontAskAgain').checked;
 
             if (currentQuestion === 1) {
                 if (isYes) {
+                    if (dontAsk) localStorage.setItem('hideMomModal', 'true');
                     document.getElementById('momModal').style.display = 'none';
                 } else {
                     currentQuestion = 2;
