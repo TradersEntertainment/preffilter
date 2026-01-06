@@ -569,6 +569,8 @@
         let currentQuestion = 1;
         function handleMom(isYes) {
             const questionEl = document.getElementById('momQuestion');
+            const btnGroup = document.querySelector('.mom-btns');
+
             if (currentQuestion === 1) {
                 if (isYes) {
                     document.getElementById('momModal').style.display = 'none';
@@ -578,9 +580,11 @@
                 }
             } else {
                 if (isYes) {
-                    document.getElementById('momModal').style.display = 'none';
+                    // Say "this site is not for you" and hide buttons
+                    questionEl.innerText = 'this site is not for you';
+                    btnGroup.style.display = 'none';
                 } else {
-                    // Loop Q2 infinitely
+                    // Loop Q2: re-apply the same question text
                     questionEl.innerText = 'are you sure you dont wanna destroy moms ?';
                 }
             }
