@@ -37,6 +37,65 @@
         .price-inputs input {
             width: 48%;
         }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -340px;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .sidebar.mobile-open {
+                left: 0;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 150px !important;
+            }
+
+            .table-scroll {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px;
+            }
+
+            .ticker-manager {
+                width: 90% !important;
+                left: 5% !important;
+                right: auto !important;
+            }
+
+            .menu-toggle {
+                display: block !important;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+        }
     </style>
 </head>
 
@@ -130,11 +189,14 @@
 
     <div class="main-content">
         <header class="top-bar">
-            <div class="search-box">
-                <input type="text" id="tickerSearch" placeholder="Filter results..." oninput="applyFilters()">
+            <div style="display: flex; align-items: center;">
+                <button class="menu-toggle" onclick="toggleMobileSidebar()">☰ Menu</button>
+                <div class="search-box">
+                    <input type="text" id="tickerSearch" placeholder="Filter..." oninput="applyFilters()">
+                </div>
             </div>
             <div class="global-info">
-                <span id="globalSummary" style="color: var(--accent); font-weight: bold;">0 items found</span>
+                <span id="globalSummary" style="color: var(--accent); font-weight: bold;">0 items</span>
             </div>
         </header>
 
@@ -263,6 +325,22 @@
             document.getElementById('managerSection').classList.toggle('hidden');
             loadTickers();
         }
+
+        function toggleMobileSidebar() {
+            document.querySelector('.sidebar').classList.toggle('mobile-open');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            const sidebar = document.querySelector('.sidebar');
+            const toggle = document.querySelector('.menu-toggle');
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(e.target) &&
+                !toggle.contains(e.target) &&
+                sidebar.classList.contains('mobile-open')) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
 
         async function triggerScan() {
             const threshold = document.getElementById('threshold').value;
