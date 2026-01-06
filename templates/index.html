@@ -213,6 +213,8 @@
                             <th onclick="setSort('streak_count')">Streak</th>
                             <th onclick="setSort('raw_yield')">Yield</th>
                             <th onclick="setSort('sp_rating')">S&P / Moody</th>
+                            <th onclick="setSort('call_date')">Call</th>
+                            <th onclick="setSort('maturity')">Mat</th>
                             <th onclick="setSort('sector')">Sector</th>
                         </tr>
                     </thead>
@@ -379,6 +381,8 @@
                     <td class="diff-val ${streakClass}">${streakIcon} ${i.streak_count} Days</td>
                     <td style="color:var(--accent); font-weight:bold;">${i.yield}</td>
                     <td style="font-size:0.75rem; opacity:0.8;">${i.sp_rating} <span style="font-size:0.6rem; opacity:0.5">/ ${i.moody_rating}</span></td>
+                    <td style="font-size:0.7rem; opacity:0.7;">${i.call_date || '-'}</td>
+                    <td style="font-size:0.7rem; opacity:0.7;">${i.maturity || '-'}</td>
                     <td style="font-size:0.75rem; opacity:0.7;">${i.sector}</td>
                 </tr>`;
             }).join('');
