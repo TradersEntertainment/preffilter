@@ -1,0 +1,1002 @@
+{
+    "AFB": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BBN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BFZ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BFK": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BHV": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BKN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BLE": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BMN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BNY": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "BYM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "CEV": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "CMU": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "CXE": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "CXH": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "DMB": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "DSM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "DTF": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "EIM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "ENX": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "EOT": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "ETX": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "EVN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "FMN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "GBAB": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "IIM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "IQI": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "KTF": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "LEO": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MFM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MHD": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MHF": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MHN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MIY": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MMD": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MPA": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MQT": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MQY": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MUA": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MUC": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MUE": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MUJ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MVT": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MVF": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MYD": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MYI": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "MYN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NAC": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NAD": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NAZ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NBB": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NBH": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NCA": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NDMO": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NEA": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NIM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NMI": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NKX": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NMS": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NMZ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NMCO": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NMT": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NNY": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NPV": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NQP": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NRK": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NVG": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NXC": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NXJ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NXN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NXP": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "NZF": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "OIA": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "PCQ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "PML": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "PMM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "PMO": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "PNI": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "RFM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "RFMZ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "RMI": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "RMM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "RMMZ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "SBI": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VCV": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VFL": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VGM": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VKI": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VKQ": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VMO": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VTN": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "VPV": {
+        "sector": "Municipal Bond",
+        "type": "CEF"
+    },
+    "STK": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BST": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BSTZ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BTO": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "QQQX": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "AIO": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "CET": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "CII": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "HGLB": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "NIE": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "CSQ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "RVT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "EOS": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "SOR": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ADX": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "RMT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "FFA": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "NBXG": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ETG": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BTX": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "EVT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ETY": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "SPXX": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "SCD": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "EOI": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BXMX": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ETO": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "JCE": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BOE": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "NFJ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ECAT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "DIAX": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "SPE": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ETB": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "TBLD": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "NMAI": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GNT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "EXG": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GF": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "CRF": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "FUND": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ETW": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "AOD": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BDJ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BCAT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ETJ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "CLM": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GDV": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GGZ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GGT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "USA": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ZTR": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "EOD": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "AGD": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GLO": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "RIV": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "LGI": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "MCN": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ETV": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "TY": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BMEZ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GLV": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GCV": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "IGA": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BGY": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GAB": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "IGD": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "HEQ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "RGT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GRF": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "MCR": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ASG": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "PPT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "FINS": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "MIN": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GLQ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "MMT": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "EHI": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "SWZ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "RCG": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GDL": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "FOF": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "STEW": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "GAM": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "CPZ": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "BANX": {
+        "sector": "Equity/Core",
+        "type": "CEF"
+    },
+    "ASGI": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "BUI": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "DNP": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "DPG": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "ERH": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "FT": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "GLU": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "GUT": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "HTD": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "IDE": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "MEGI": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "NXG": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "PDT": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "UTF": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "UTG": {
+        "sector": "Utility",
+        "type": "CEF"
+    },
+    "RQI": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "RNP": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "RLTY": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "RFI": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "PGZ": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "NRO": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "JRS": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "JRI": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "IGR": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "AWP": {
+        "sector": "Real Estate",
+        "type": "CEF"
+    },
+    "ACP": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "AVK": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BCX": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BGB": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BGT": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BHK": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BIT": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BLW": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BTT": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BTZ": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "BXSL": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "DBL": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "DSL": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "DSU": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "EARN": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "ECC": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "EDF": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "EFR": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "FFC": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "FRA": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "FSCO": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "GHY": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "GOF": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "GUG": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "HIO": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "HPF": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "HPI": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "HPS": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "HYT": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "ISD": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "JPC": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "KIO": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "KYN": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "MSD": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "NUV": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "PCN": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "PDI": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "PDO": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "PFL": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "PHK": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "PIM": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "PTY": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "RA": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "TEI": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "THQ": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "THW": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "VVR": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    },
+    "WDI": {
+        "sector": "Mixed/Debt",
+        "type": "CEF"
+    }
+}

@@ -6,21 +6,25 @@ import os
 app = Flask(__name__)
 
 # Global state
-latest_results = {"all_data": [], "status": "idle"}
+modes_data = {
+    "preferred": {"all_data": [], "status": "idle"},
+    "cef": {"all_data": [], "status": "idle"}
+}
 current_settings = {"threshold": 0.015}
 
-def background_scan():
-    global latest_results
-    latest_results["status"] = "scanning"
+def background_scan(mode):
+    global modes_data
+    modes_data[mode]["status"] = "scanning"
     try:
-        res = run_full_analysis(threshold=current_settings["threshold"])
+        res = run_full_analysis(threshold=current_settings["threshold"], mode=mode)
         if "error" in res:
-            latest_results["status"] = f"Error: {res['error']}"
+            modes_data[mode]["status"] = f"Error: {res['error']}"
         else:
-            latest_results.update(res)
-            latest_results["status"] = "done"
+            # We only update all_data if no error
+            modes_data[mode]["all_data"] = res.get("all_data", [])
+            modes_data[mode]["status"] = "done"
     except Exception as e:
-        latest_results["status"] = f"error: {str(e)}"
+        modes_data[mode]["status"] = f"error: {str(e)}"
 
 @app.route('/')
 def index():
@@ -28,7 +32,7 @@ def index():
 
 @app.route('/api/status')
 def get_status():
-    return jsonify(latest_results)
+    return jsonify(modes_data)
 
 @app.route('/api/logs')
 def get_logs():
@@ -36,17 +40,19 @@ def get_logs():
 
 @app.route('/api/scan', methods=['POST'])
 def start_scan():
-    if latest_results["status"] == "scanning":
-        return jsonify({"message": "Scan already in progress"}), 400
-    
+    # If any is scanning, check logic
     data = request.json
     if data and "threshold" in data:
         current_settings["threshold"] = float(data["threshold"]) / 100
 
-    scan_logs.clear() # Reset logs for new scan
-    thread = threading.Thread(target=background_scan)
-    thread.start()
-    return jsonify({"message": "Scan started"})
+    scan_logs.clear()
+    
+    # Run both Preferred and CEF scans
+    for m in ["preferred", "cef"]:
+        if modes_data[m]["status"] != "scanning":
+            threading.Thread(target=background_scan, args=(m,)).start()
+
+    return jsonify({"message": "Scans started for both modes"})
 
 @app.route('/api/tickers', methods=['GET'])
 def get_tickers():

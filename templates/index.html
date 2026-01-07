@@ -97,6 +97,43 @@
             margin-right: 10px;
         }
 
+        /* CEF RED THEME */
+        body.cef-mode {
+            --side-bg: #450a0a;
+            --main-bg: #180808;
+            --accent: #f87171;
+            --card: rgba(127, 29, 29, 0.3);
+            --border: rgba(248, 113, 113, 0.15);
+        }
+
+        .mode-switcher {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: none;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+            opacity: 0.5;
+        }
+
+        .mode-btn.active {
+            background: var(--accent);
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
         /* Intro Modal Styles */
         #momModal {
             position: fixed;
@@ -170,9 +207,15 @@
 
     <div class="sidebar">
         <div class="brand">
-            <h1>Range<span>Trader</span> <small>v3.9</small></h1>
-            <p>Dual-Range Professional Monitor</p>
+            <h1>Range<span>Trader</span> <small>v4.0</small></h1>
+            <p>Dual-Market Professional Monitor</p>
         </div>
+
+        <div class="mode-switcher">
+            <button id="prefBtn" class="mode-btn active" onclick="switchMode('preferred')">PREFERRED</button>
+            <button id="cefBtn" class="mode-btn" onclick="switchMode('cef')">CEFs</button>
+        </div>
+
 
         <div class="filter-group">
             <h3>Lookback & Logic</h3>
@@ -354,6 +397,8 @@
 
     <script>
         let rawData = { all_data: [] };
+        let fullModesData = { preferred: { all_data: [] }, cef: { all_data: [] } };
+        let activeMode = 'preferred';
         let currentSort = { col: 'dL60', dir: 'asc' };
 
         function clearFilters() {
@@ -396,43 +441,66 @@
             document.querySelector('.sidebar').classList.toggle('mobile-open');
         }
 
-        // Close sidebar when clicking outside on mobile
         document.addEventListener('click', (e) => {
             const sidebar = document.querySelector('.sidebar');
             const toggle = document.querySelector('.menu-toggle');
             if (window.innerWidth <= 768 &&
-                !sidebar.contains(e.target) &&
-                !toggle.contains(e.target) &&
+                sidebar && !sidebar.contains(e.target) &&
+                toggle && !toggle.contains(e.target) &&
                 sidebar.classList.contains('mobile-open')) {
                 sidebar.classList.remove('mobile-open');
             }
         });
 
+        function switchMode(mode) {
+            activeMode = mode;
+            document.body.classList.toggle('cef-mode', mode === 'cef');
+            document.getElementById('prefBtn').classList.toggle('active', mode === 'preferred');
+            document.getElementById('cefBtn').classList.toggle('active', mode === 'cef');
+
+            // Sync current data view
+            rawData = fullModesData[activeMode];
+            updateSectorList();
+            applyFilters();
+        }
+
         async function triggerScan() {
             const threshold = document.getElementById('threshold').value;
-            await fetch('/api/scan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ threshold }) });
+            await fetch('/api/scan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ threshold })
+            });
             poll();
         }
 
         async function poll() {
             const res = await fetch('/api/status');
             const data = await res.json();
-            document.getElementById('statusIndicator').innerText = data.status;
-            document.getElementById('statusIndicator').className = `status-${data.status.toLowerCase().split(' ')[0]}`;
+
+            fullModesData = data;
+            rawData = fullModesData[activeMode];
+
+            // Check overall status
+            const prefStatus = data.preferred.status;
+            const cefStatus = data.cef.status;
+
+            let statusText = `PREF: ${prefStatus} | CEF: ${cefStatus}`;
+            document.getElementById('statusIndicator').innerText = statusText;
+
+            const isScanning = prefStatus === 'scanning' || cefStatus === 'scanning';
+            document.getElementById('scanBtn').disabled = isScanning;
 
             const logs = await (await fetch('/api/logs')).json();
             const consoleEl = document.getElementById('logConsole');
             consoleEl.innerHTML = logs.map(l => `<div>${l}</div>`).join('');
             consoleEl.scrollTop = consoleEl.scrollHeight;
 
-            if (data.status === 'done' || data.status === 'idle') {
-                document.getElementById('scanBtn').disabled = false;
-                rawData = data;
+            if (isScanning) {
+                setTimeout(poll, 2000);
+            } else {
                 updateSectorList();
                 applyFilters();
-            } else {
-                document.getElementById('scanBtn').disabled = true;
-                setTimeout(poll, 2000);
             }
         }
 

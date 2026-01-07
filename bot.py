@@ -72,16 +72,24 @@ def infer_metadata(ticker_symbol, info):
     elif any(x in name for x in ["TO FLOAT", "TO VARIABLE", "RESET"]): rate_type = "Fixed-to-Float"
     return {"name": info.get("longName", ticker_symbol), "sector": sector, "type": sec_type, "rate": rate_type}
 
-def run_full_analysis(threshold=None):
+def run_full_analysis(threshold=None, mode="preferred"):
     global scan_logs
     if threshold is None: threshold = Alert_Threshold_Pct
     results = {"all_data": []}
     
-    log_msg("--- Scan Started ---")
-    ticker_map = load_tickers()
+    log_msg(f"--- Scan Started ({mode.upper()} mode) ---")
+    
+    if mode == "cef":
+        cef_master = load_json("cef_masterlist.json")
+        ticker_map = {t: [t] for t in cef_master.keys()}
+        master_metadata = cef_master
+    else:
+        ticker_map = load_tickers()
+        master_metadata = load_json(MASTER_METADATA_FILE)
+
     metadata_cache = load_json(METADATA_FILE)
     symbol_cache = load_json(SYMBOL_CACHE_FILE)
-    master_metadata = load_json(MASTER_METADATA_FILE)
+    
     if not ticker_map:
         log_msg("Error: No tickers found.")
         return {"error": "No tickers"}
@@ -115,20 +123,15 @@ def run_full_analysis(threshold=None):
                         try:
                             info = m_data.tickers[v].info
                             if info and info.get("longName"):
-                                local_results.append((o, v, info))
+                                m_item = infer_metadata(v, info)
+                                # Capture dividend info for CEFs or any stock
+                                div_rate = info.get("dividendRate", info.get("trailingAnnualDividendRate", 0.0))
+                                m_item["dividendRate"] = div_rate
+                                metadata_cache[v] = m_item
+                                symbol_cache[o] = v
+                                resolved_map[o] = v
                                 break
                         except: pass
-            except: pass
-            return local_results
-
-        with ThreadPoolExecutor(max_workers=5) as executor:
-            future_to_chunk = {executor.submit(resolve_chunk, chunk): chunk for chunk in chunks}
-            for future in as_completed(future_to_chunk):
-                batch_res = future.result()
-                for o, v, info in batch_res:
-                    metadata_cache[v] = infer_metadata(v, info)
-                    symbol_cache[o] = v
-                    resolved_map[o] = v
         
         save_json(METADATA_FILE, metadata_cache)
         save_json(SYMBOL_CACHE_FILE, symbol_cache)
@@ -237,8 +240,16 @@ def run_full_analysis(threshold=None):
                 except:
                     pass
             
-            # Yield: (Coupon * FaceValue) / CurrentPrice. Assuming $25 face value.
-            cur_yield = (coupon * 25.0 / current) if current > 0 and coupon > 0 else 0.0
+            # Yield & Display
+            if mode == "cef":
+                m_info = metadata_cache.get(v, {})
+                div_rate = m_info.get("dividendRate", 0.0)
+                cur_yield = (div_rate / current) if current > 0 else 0.0
+                display_coupon = f"${div_rate:.2f}"
+            else:
+                # Preferred logic: (Coupon * FaceValue) / CurrentPrice. Assuming $25 face value.
+                cur_yield = (coupon * 25.0 / current) if current > 0 and coupon > 0 else 0.0
+                display_coupon = f"{coupon*100:.2f}%" if coupon > 0 else "N/A"
 
             results["all_data"].append({
                 "ticker": orig,
@@ -251,7 +262,7 @@ def run_full_analysis(threshold=None):
                 "is_floating": is_currently_floating,
                 "call_date": call_date_str,
                 "maturity": m_data.get("maturity", ""),
-                "coupon": f"{coupon*100:.2f}%" if coupon > 0 else "N/A",
+                "coupon": display_coupon,
                 "price": current,
                 "yield": f"{cur_yield*100:.2f}%" if cur_yield > 0 else "N/A",
                 "raw_yield": float(cur_yield),
