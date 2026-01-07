@@ -191,8 +191,19 @@ def run_full_analysis(threshold=None, mode="preferred"):
 
     log_msg("Crunching range analytics...")
     combined_prices = pd.concat(all_prices, axis=1)
-    closes = combined_prices['Close']
-    opens = combined_prices['Open']
+    # Debug info
+    # log_msg(f"Combined Cols: {list(combined_prices.columns)[:5]}")
+    try:
+        closes = combined_prices['Close']
+        opens = combined_prices['Open']
+    except Exception as e:
+        log_msg(f"Error accessing Close/Open: {e}")
+        # Fallback if flat index (rare but possible with 1 ticker)
+        closes = combined_prices
+        opens = combined_prices 
+    
+    if hasattr(closes, 'columns'):
+         log_msg(f"Closes columns (first 10): {list(closes.columns)[:10]}")
 
     # Pre-calculate benchmark dips if in CEF mode
     benchmarks_dL60 = {}
@@ -221,8 +232,10 @@ def run_full_analysis(threshold=None, mode="preferred"):
         
         log_msg(f"Benchmarks ready: {list(benchmarks_dL60.keys())}")
 
+    analysis_count = 0
     for orig, v in resolved_map.items():
         if isinstance(closes, pd.DataFrame) and v in closes.columns:
+            analysis_count += 1
             series = closes[v]
             if isinstance(series, pd.DataFrame):
                 series = series.iloc[:, 0] # Handle duplicates
