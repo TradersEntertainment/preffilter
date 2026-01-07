@@ -232,8 +232,8 @@
             </div>
         </div>
 
-        <div class="filter-group">
-            <h3>Asset Filters</h3>
+        <div class="filter-group" id="prefFilters">
+            <h3>Preferred Filters</h3>
             <select id="rateFilter" onchange="applyFilters()">
                 <option value="all">All Rates</option>
                 <option value="Fix">Fixed</option>
@@ -248,13 +248,29 @@
                 <option value="Trust P">Trust Preferred</option>
                 <option value="Term">Term Preferred</option>
             </select>
-            <select id="sectorFilter" onchange="applyFilters()">
-                <option value="all">All Sectors</option>
-            </select>
             <label style="display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 0.85rem;">
                 <input type="checkbox" id="floatingOnly" onchange="applyFilters()">
                 <span>🔄 Currently Floating Only</span>
             </label>
+        </div>
+
+        <div class="filter-group hidden" id="cefFilters">
+            <h3>CEF Categories</h3>
+            <select id="cefCategoryFilter" onchange="applyFilters()">
+                <option value="all">All CEF Categories</option>
+                <option value="Municipal Bond">Munis</option>
+                <option value="Equity/Core">QQQ/SPY</option>
+                <option value="Mixed/Debt">Reba</option>
+                <option value="Utility">Utility</option>
+                <option value="Real Estate">Real Estate</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <h3>Global Sector</h3>
+            <select id="sectorFilter" onchange="applyFilters()">
+                <option value="all">All Sectors</option>
+            </select>
         </div>
 
         <div class="filter-group">
@@ -458,6 +474,10 @@
             document.getElementById('prefBtn').classList.toggle('active', mode === 'preferred');
             document.getElementById('cefBtn').classList.toggle('active', mode === 'cef');
 
+            // Toggle filter visibility
+            document.getElementById('prefFilters').classList.toggle('hidden', mode === 'cef');
+            document.getElementById('cefFilters').classList.toggle('hidden', mode === 'preferred');
+
             // Sync current data view
             rawData = fullModesData[activeMode];
             updateSectorList();
@@ -529,13 +549,19 @@
             const floatingOnly = document.getElementById('floatingOnly').checked;
 
             const baseFilter = (i) => {
-                if (rate !== 'all' && i.rate !== rate) return false;
-                if (type !== 'all' && i.type !== type) return false;
+                if (activeMode === 'preferred') {
+                    if (rate !== 'all' && i.rate !== rate) return false;
+                    if (type !== 'all' && i.type !== type) return false;
+                    if (floatingOnly && !i.is_floating) return false;
+                } else {
+                    const cefCat = document.getElementById('cefCategoryFilter').value;
+                    if (cefCat !== 'all' && i.sector !== cefCat) return false;
+                }
+
                 const sector = document.getElementById('sectorFilter').value;
                 if (sector !== 'all' && i.sector !== sector) return false;
                 if (i.price < minP || i.price > maxP) return false;
                 if (search && !i.ticker.includes(search) && !i.name.toUpperCase().includes(search)) return false;
-                if (floatingOnly && !i.is_floating) return false;
                 return true;
             };
 
