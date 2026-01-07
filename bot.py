@@ -197,17 +197,29 @@ def run_full_analysis(threshold=None, mode="preferred"):
     # Pre-calculate benchmark dips if in CEF mode
     benchmarks_dL60 = {}
     if mode == "cef":
+        log_msg(f"Calculating benchmarks for {len(benchmark_symbols)} ETFs...")
+        # Clean columns for easier matching
+        available_cols = []
+        if isinstance(closes, pd.DataFrame):
+            available_cols = [str(c).upper() for c in closes.columns]
+        
         for sym in benchmark_symbols:
-            if isinstance(closes, pd.DataFrame) and sym in closes.columns:
-                s = closes[sym]
+            s_upper = sym.upper()
+            if s_upper in available_cols:
+                # Get the actual column (could be string or MultiIndex)
+                col_idx = closes.columns[available_cols.index(s_upper)]
+                s = closes[col_idx]
                 if isinstance(s, pd.DataFrame): 
-                    s = s.iloc[:, 0] # Fix for "cannot convert series to float" if duplicate cols exist
+                    s = s.iloc[:, 0]
                 s = s.dropna()
                 if not s.empty:
                     current = float(s.iloc[-1])
                     h60 = float(s.tail(60).max())
                     if h60 > 0:
                         benchmarks_dL60[sym] = (h60 - current) / h60
+                        # log_msg(f"Benchmark {sym}: {benchmarks_dL60[sym]*100:.2f}% dip")
+        
+        log_msg(f"Benchmarks ready: {list(benchmarks_dL60.keys())}")
 
     for orig, v in resolved_map.items():
         if isinstance(closes, pd.DataFrame) and v in closes.columns:

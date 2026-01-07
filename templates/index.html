@@ -353,7 +353,8 @@
                                 <th onclick="setSort('price')">Price</th>
                                 <th onclick="setSort('raw_yield')">Yield</th>
                                 <th id="prefRatingHeader" onclick="setSort('sp_rating')">Rating</th>
-                                <th id="cefDivHeader" class="hidden" onclick="setSort('raw_divergence')">Makas</th>
+                                <th id="cefDivHeader" class="hidden" onclick="setSort('raw_divergence')">Sector / Makas
+                                </th>
                                 <th onclick="setSort('call_date')">Call</th>
                                 <th onclick="setSort('maturity')">Mat</th>
                                 <th onclick="setSort('dL7')">7D</th>
@@ -379,7 +380,8 @@
                                 <th onclick="setSort('price')">Price</th>
                                 <th onclick="setSort('raw_yield')">Yield</th>
                                 <th id="prefRatingHeaderSell" onclick="setSort('sp_rating')">Rating</th>
-                                <th id="cefDivHeaderSell" class="hidden" onclick="setSort('raw_divergence')">Makas</th>
+                                <th id="cefDivHeaderSell" class="hidden" onclick="setSort('raw_divergence')">Sector /
+                                    Makas</th>
                                 <th onclick="setSort('call_date')">Call</th>
                                 <th onclick="setSort('maturity')">Mat</th>
                                 <th onclick="setSort('dH7')">7D</th>
@@ -649,7 +651,7 @@
                 if (mode === 'sell' && i.dH7 <= 0.015 && i.dH30 <= 0.015 && i.dH60 <= 0.015) badge = '<span class="badge peak">TRIPLE PEAK</span>';
 
                 const extraCol = activeMode === 'cef'
-                    ? `<td style="color:var(--accent); font-weight:bold;">${i.divergence}</td>`
+                    ? `<td><div style="font-size:0.75rem; font-weight:bold;">${i.sector}</div><div style="font-size:0.7rem; color:var(--accent); font-weight:bold;">${i.divergence} Makas</div></td>`
                     : `<td style="font-size:0.75rem; opacity:0.8;">${i.sp_rating} <span style="font-size:0.6rem; opacity:0.5">/ ${i.moody_rating}</span></td>`;
 
                 return `<tr>
