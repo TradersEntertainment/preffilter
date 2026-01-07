@@ -149,6 +149,48 @@
             text-shadow: 0 0 10px var(--accent);
         }
 
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 5px;
+            cursor: help;
+            position: relative;
+        }
+
+        .info-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: 220px;
+            background-color: #000;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 100;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.7rem;
+            line-height: 1.4;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent);
+            pointer-events: none;
+        }
+
         /* Intro Modal Styles */
         #momModal {
             position: fixed;
@@ -368,7 +410,13 @@
                                 <th onclick="setSort('price')">Price</th>
                                 <th onclick="setSort('raw_yield')">Yield</th>
                                 <th id="prefRatingHeader" onclick="setSort('sp_rating')">Rating</th>
-                                <th id="cefDivHeader" class="hidden" onclick="setSort('raw_divergence')">Sector / Makas
+                                <th id="cefDivHeader" class="hidden" onclick="setSort('raw_divergence')">
+                                    Sector / Makas
+                                    <span class="info-icon">i
+                                        <span class="tooltip">Makas (Divergence) = CEF'in 60 günlük düşüşü - Sektör
+                                            ETF'lerinin (MUB, QQQ/SPY, vb.) ortalama düşüşü. Pozitif (+) sonuç fonun
+                                            sektörden daha derin düştüğünü (fırsat) gösterir.</span>
+                                    </span>
                                 </th>
                                 <th onclick="setSort('call_date')">Call</th>
                                 <th onclick="setSort('maturity')">Mat</th>
@@ -395,8 +443,14 @@
                                 <th onclick="setSort('price')">Price</th>
                                 <th onclick="setSort('raw_yield')">Yield</th>
                                 <th id="prefRatingHeaderSell" onclick="setSort('sp_rating')">Rating</th>
-                                <th id="cefDivHeaderSell" class="hidden" onclick="setSort('raw_divergence')">Sector /
-                                    Makas</th>
+                                <th id="cefDivHeaderSell" class="hidden" onclick="setSort('raw_divergence')">
+                                    Sector / Makas
+                                    <span class="info-icon">i
+                                        <span class="tooltip">Makas (Divergence) = CEF'in 60 günlük düşüşü - Sektör
+                                            ETF'lerinin (MUB, QQQ/SPY, vb.) ortalama düşüşü. Pozitif (+) sonuç fonun
+                                            sektörden daha derin düştüğünü (fırsat) gösterir.</span>
+                                    </span>
+                                </th>
                                 <th onclick="setSort('call_date')">Call</th>
                                 <th onclick="setSort('maturity')">Mat</th>
                                 <th onclick="setSort('dH7')">7D</th>
