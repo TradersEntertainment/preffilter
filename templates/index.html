@@ -134,6 +134,21 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
+        .ticker-link {
+            color: white;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .ticker-link:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
         /* Intro Modal Styles */
         #momModal {
             position: fixed;
@@ -650,12 +665,22 @@
                 if (mode === 'buy' && i.dL7 <= 0.015 && i.dL30 <= 0.015 && i.dL60 <= 0.015) badge = '<span class="badge triple">TRIPLE DIP</span>';
                 if (mode === 'sell' && i.dH7 <= 0.015 && i.dH30 <= 0.015 && i.dH60 <= 0.015) badge = '<span class="badge peak">TRIPLE PEAK</span>';
 
+                const tickerLink = activeMode === 'cef'
+                    ? `https://www.cefconnect.com/fund/${i.ticker}`
+                    : `https://finance.yahoo.com/quote/${i.ticker}`;
+
                 const extraCol = activeMode === 'cef'
                     ? `<td><div style="font-size:0.75rem; font-weight:bold;">${i.sector}</div><div style="font-size:0.7rem; color:var(--accent); font-weight:bold;">${i.divergence} Makas</div></td>`
                     : `<td style="font-size:0.75rem; opacity:0.8;">${i.sp_rating} <span style="font-size:0.6rem; opacity:0.5">/ ${i.moody_rating}</span></td>`;
 
                 return `<tr>
-                    <td><div class="ticker-cell">${i.ticker} ${badge}</div><div class="name-sub">${i.name.slice(0, 20)}</div></td>
+                    <td>
+                        <div class="ticker-cell">
+                            <a href="${tickerLink}" target="_blank" class="ticker-link">${i.ticker}</a>
+                            ${badge}
+                        </div>
+                        <div class="name-sub">${i.name.slice(0, 20)}</div>
+                    </td>
                     <td>$${i.price.toFixed(2)}</td>
                     <td style="color:var(--accent); font-weight:bold;">${i.yield}</td>
                     ${extraCol}
