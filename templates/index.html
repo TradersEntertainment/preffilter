@@ -719,9 +719,14 @@
                 if (mode === 'buy' && i.dL7 <= 0.015 && i.dL30 <= 0.015 && i.dL60 <= 0.015) badge = '<span class="badge triple">TRIPLE DIP</span>';
                 if (mode === 'sell' && i.dH7 <= 0.015 && i.dH30 <= 0.015 && i.dH60 <= 0.015) badge = '<span class="badge peak">TRIPLE PEAK</span>';
 
+                let yahooTicker = i.ticker;
+                if (activeMode === 'preferred' && i.ticker.includes('-')) {
+                    yahooTicker = i.ticker.replace('-', '-P');
+                }
+
                 const tickerLink = activeMode === 'cef'
                     ? `https://www.cefconnect.com/fund/${i.ticker}`
-                    : `https://finance.yahoo.com/quote/${i.ticker}`;
+                    : `https://finance.yahoo.com/quote/${yahooTicker}`;
 
                 const extraCol = activeMode === 'cef'
                     ? `<td><div style="font-size:0.75rem; font-weight:bold;">${i.sector}</div><div style="font-size:0.7rem; color:var(--accent); font-weight:bold;">${i.divergence} Makas</div></td>`
