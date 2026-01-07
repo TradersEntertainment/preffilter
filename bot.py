@@ -199,7 +199,10 @@ def run_full_analysis(threshold=None, mode="preferred"):
     if mode == "cef":
         for sym in benchmark_symbols:
             if isinstance(closes, pd.DataFrame) and sym in closes.columns:
-                s = closes[sym].dropna()
+                s = closes[sym]
+                if isinstance(s, pd.DataFrame): 
+                    s = s.iloc[:, 0] # Fix for "cannot convert series to float" if duplicate cols exist
+                s = s.dropna()
                 if not s.empty:
                     current = float(s.iloc[-1])
                     h60 = float(s.tail(60).max())
