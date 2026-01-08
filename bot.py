@@ -122,7 +122,12 @@ def run_full_analysis(threshold=None, mode="preferred"):
 
     for orig in original_tickers:
         if orig in symbol_cache:
-            resolved_map[orig] = symbol_cache[orig]
+            v = symbol_cache[orig]
+            # Check if we have valid metadata. If incomplete, force retry.
+            if metadata_cache.get(v, {}).get("incomplete", False):
+                needs_resolution.append(orig)
+            else:
+                resolved_map[orig] = v
         else:
             needs_resolution.append(orig)
 
@@ -155,12 +160,10 @@ def run_full_analysis(threshold=None, mode="preferred"):
                             # Fallback: trust the ticker exists, use defaults
                             # Only do this if we haven't found a better match yet
                             if o not in resolved_map:
-                                metadata_cache[v] = {"name": v, "sector": "Other", "type": "Unknown", "rate": "Fixed", "dividendRate": 0.0}
+                                # Use incomplete flag so we retry next time
+                                metadata_cache[v] = {"name": v, "sector": "Other", "type": "Unknown", "rate": "Fixed", "dividendRate": 0.0, "incomplete": True}
                                 symbol_cache[o] = v
                                 resolved_map[o] = v
-                                # Don't break yet, maybe next possible match is better? 
-                                # Actually for efficiency, if we accepted it as fallback, let's keep it but keep trying?
-                                # No, simplified: just mark it resolved.
                                 break
             except: pass
             return
