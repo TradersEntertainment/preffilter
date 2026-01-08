@@ -339,12 +339,20 @@ def run_full_analysis(threshold=None, mode="preferred"):
                 
                 # Divergence calculation
                 relevant_etfs = SECTOR_ETFS.get(sector, [])
-                etf_dips = [benchmarks_dL60[e] for e in relevant_etfs if e in benchmarks_dL60]
+                used_etfs = [e for e in relevant_etfs if e in benchmarks_dL60]
+                etf_dips = [benchmarks_dL60[e] for e in used_etfs]
+                
+                benchmark_str = ""
+                if used_etfs:
+                    benchmark_str = f"vs {', '.join(used_etfs)}"
+                
                 if etf_dips:
                     avg_etf_dip = sum(etf_dips) / len(etf_dips)
                     cef_dip = (h60 - current) / h60 # How much it dipped from 60D high
                     raw_divergence = (cef_dip - avg_etf_dip)
                     display_divergence = f"{raw_divergence*100:+.1f}%"
+                # else:
+                #    log_msg(f"Warning: No benchmarks for {v} (Sector: {sector}). Expected: {relevant_etfs}, Found: {list(benchmarks_dL60.keys())}")
             else:
                 # Preferred logic: (Coupon * FaceValue) / CurrentPrice. Assuming $25 face value.
                 cur_yield = (coupon * 25.0 / current) if current > 0 and coupon > 0 else 0.0
@@ -374,7 +382,8 @@ def run_full_analysis(threshold=None, mode="preferred"):
                 "dL30": (current-l30)/l30, "dH30": (h30-current)/h30, 
                 "dL7": (current-l7)/l7, "dH7": (h7-current)/h7,
                 "rsi": round(current_rsi, 1),
-                "avg_volume": int(avg_vol)
+                "avg_volume": int(avg_vol),
+                "benchmark_str": benchmark_str if mode == "cef" else ""
             })
 
     log_msg(f"Scan Finished. {len(results['all_data'])} items analyzed.")

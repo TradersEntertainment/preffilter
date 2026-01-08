@@ -742,7 +742,11 @@
                     : `https://finance.yahoo.com/quote/${yahooTicker}`;
 
                 const extraCol = activeMode === 'cef'
-                    ? `<td><div style="font-size:0.75rem; font-weight:bold;">${i.sector}</div><div style="font-size:0.7rem; color:var(--accent); font-weight:bold;">${i.divergence} Makas</div></td>`
+                    ? `<td>
+                        <div style="font-size:0.75rem; font-weight:bold;">${i.sector}</div>
+                        <div style="font-size:0.7rem; color:var(--accent); font-weight:bold;">${i.divergence} Makas</div>
+                        <div style="font-size:0.6rem; opacity:0.5; margin-top:2px;">${i.benchmark_str || '-'}</div>
+                       </td>`
                     : `<td style="font-size:0.75rem; opacity:0.8;">${i.sp_rating} <span style="font-size:0.6rem; opacity:0.5">/ ${i.moody_rating}</span></td>`;
 
                 return `<tr>
