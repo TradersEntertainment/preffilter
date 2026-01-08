@@ -673,11 +673,14 @@
                     if (selectedTypes.length > 0 && !selectedTypes.includes(i.type)) return false;
                     if (floatingOnly && !i.is_floating) return false;
 
+
                     // Coupon filter - extract numeric value from coupon string (e.g., "6.50%")
                     const couponStr = i.coupon || '';
-                    const couponMatch = couponStr.match(/([\\d.]+)/);
+                    const couponMatch = couponStr.match(/([\d.]+)/);
                     const couponVal = couponMatch ? parseFloat(couponMatch[1]) : 0;
-                    if (couponVal < minCoupon || couponVal > maxCoupon) return false;
+                    // Only apply filter if user has set a value
+                    if (minCoupon > 0 && couponVal < minCoupon) return false;
+                    if (maxCoupon < 999 && couponVal > maxCoupon) return false;
 
                     // Investment grade filter
                     if (investmentGradeOnly) {
