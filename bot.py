@@ -196,6 +196,8 @@ def run_full_analysis(threshold=None, mode="preferred"):
             benchmark_symbols.extend(etf_list)
     
     symbols_to_download = list(set(resolved_map.values()) | set(benchmark_symbols))
+    log_msg(f"Benchmarks: {benchmark_symbols}")
+    log_msg(f"Download Sample: {symbols_to_download[:10]}")
     log_msg(f"Fetching prices for {len(symbols_to_download)} symbols (Mode: {mode})...")
     
     chunk_size = 200
@@ -244,6 +246,43 @@ def run_full_analysis(threshold=None, mode="preferred"):
     if isinstance(closes, pd.Series): closes = closes.to_frame()
     if isinstance(opens, pd.Series): opens = opens.to_frame()
     if isinstance(volumes, pd.Series): volumes = volumes.to_frame()
+
+    # --- FALLBACK FOR MISSING BENCHMARKS ---
+    if mode == "cef" and benchmark_symbols:
+        available = []
+        if hasattr(closes, 'columns'):
+            available = [str(c).upper() for c in closes.columns]
+        
+        missing_benchmarks = [b for b in benchmark_symbols if b not in available]
+        
+        if missing_benchmarks:
+            log_msg(f"Attempting fallback fetch for missing benchmarks: {missing_benchmarks}")
+            for mb in missing_benchmarks:
+                try:
+                    # Individual fetch
+                    mb_data = yf.download(mb, period="4mo", progress=False, threads=False, auto_adjust=adj_flag)
+                    if not mb_data.empty and 'Close' in mb_data.columns:
+                        mb_close = mb_data['Close']
+                        # Handle if it comes back as DataFrame or Series
+                        if isinstance(mb_close, pd.DataFrame):
+                             # Often comes as (Date, Ticker) -> we want just the series
+                             # If column name matches ticker, grab it, else take first col
+                             if mb in mb_close.columns:
+                                 mb_close = mb_close[mb]
+                             else:
+                                 mb_close = mb_close.iloc[:, 0]
+                        
+                        # Rename Series to ticker name to ensure it aligns
+                        mb_close.name = mb
+                        
+                        # Merge into closes
+                        # We use join (outer) to keep existing dates, or concat
+                        # Concat is safer to append a new column
+                        closes = pd.concat([closes, mb_close], axis=1)
+                        log_msg(f"Fallback success for {mb}")
+                except Exception as e:
+                    log_msg(f"Fallback failed for {mb}: {e}")
+    # ---------------------------------------
     
     if hasattr(closes, 'columns'):
          log_msg(f"Closes columns (first 10): {list(closes.columns)[:10]}")
@@ -257,6 +296,8 @@ def run_full_analysis(threshold=None, mode="preferred"):
         if isinstance(closes, pd.DataFrame):
             available_cols = [str(c).upper() for c in closes.columns]
         
+        log_msg(f"Available Cols for Benchmarks: {available_cols[:20]}... (Total: {len(available_cols)})")
+
         for sym in benchmark_symbols:
             s_upper = sym.upper()
             if s_upper in available_cols:
