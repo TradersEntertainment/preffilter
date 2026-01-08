@@ -290,21 +290,30 @@
         </div>
 
         <div class="filter-group" id="prefFilters">
-            <h3>Preferred Filters</h3>
-            <select id="rateFilter" onchange="applyFilters()">
-                <option value="all">All Rates</option>
-                <option value="Fix">Fixed</option>
-                <option value="Fix-Float">Fix-to-Float</option>
-                <option value="FRR">Reset Rate (FRR)</option>
-                <option value="FLR">Floating (FLR)</option>
-            </select>
-            <select id="typeFilter" onchange="applyFilters()">
-                <option value="all">All Types</option>
-                <option value="Trad">Traditional Preferred</option>
-                <option value="BB">Baby Bond (BB)</option>
-                <option value="Trust P">Trust Preferred</option>
-                <option value="Term">Term Preferred</option>
-            </select>
+            <h3>Rate Type (Multi-Select)</h3>
+            <div class="check-group" id="rateFilterGroup">
+                <label><input type="checkbox" value="Fix" checked onchange="applyFilters()"> Fixed</label>
+                <label><input type="checkbox" value="Fix-Float" checked onchange="applyFilters()"> Fix-to-Float</label>
+                <label><input type="checkbox" value="FRR" checked onchange="applyFilters()"> Reset Rate (FRR)</label>
+                <label><input type="checkbox" value="FLR" checked onchange="applyFilters()"> Floating (FLR)</label>
+            </div>
+            <h3 style="margin-top: 12px;">Security Type (Multi-Select)</h3>
+            <div class="check-group" id="typeFilterGroup">
+                <label><input type="checkbox" value="Trad" checked onchange="applyFilters()"> Traditional
+                    Preferred</label>
+                <label><input type="checkbox" value="BB" checked onchange="applyFilters()"> Baby Bond (BB)</label>
+                <label><input type="checkbox" value="Trust P" checked onchange="applyFilters()"> Trust Preferred</label>
+                <label><input type="checkbox" value="Term" checked onchange="applyFilters()"> Term Preferred</label>
+            </div>
+            <h3 style="margin-top: 12px;">Coupon Range (%)</h3>
+            <div class="price-inputs">
+                <input type="number" id="minCoupon" placeholder="Min %" step="0.5" oninput="applyFilters()">
+                <input type="number" id="maxCoupon" placeholder="Max %" step="0.5" oninput="applyFilters()">
+            </div>
+            <label style="display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 0.85rem;">
+                <input type="checkbox" id="investmentGradeOnly" onchange="applyFilters()">
+                <span>⭐ Investment Grade Only (BBB-/Baa3+)</span>
+            </label>
             <label style="display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 0.85rem;">
                 <input type="checkbox" id="floatingOnly" onchange="applyFilters()">
                 <span>🔄 Currently Floating Only</span>
@@ -500,13 +509,21 @@
         let currentSort = { col: 'dL60', dir: 'asc' };
 
         function clearFilters() {
-            document.getElementById('rateFilter').value = 'all';
-            document.getElementById('typeFilter').value = 'all';
+            // Reset multi-select checkboxes to all checked
+            document.querySelectorAll('#rateFilterGroup input').forEach(el => el.checked = true);
+            document.querySelectorAll('#typeFilterGroup input').forEach(el => el.checked = true);
+            // Reset coupon range
+            document.getElementById('minCoupon').value = '';
+            document.getElementById('maxCoupon').value = '';
+            // Reset investment grade
+            document.getElementById('investmentGradeOnly').checked = false;
+            // Reset other filters
             document.getElementById('tickerSearch').value = '';
             document.getElementById('minPrice').value = '';
             document.getElementById('maxPrice').value = '';
             document.getElementById('streakType').value = 'any';
             document.getElementById('minStreak').value = '3';
+            document.getElementById('floatingOnly').checked = false;
             applyFilters();
         }
 
@@ -624,8 +641,20 @@
         function applyFilters() {
             if (!rawData.all_data) return;
             const threshold = parseFloat(document.getElementById('threshold').value) / 100;
-            const rate = document.getElementById('rateFilter').value;
-            const type = document.getElementById('typeFilter').value;
+
+            // Multi-select: get all checked values for rate and type
+            const selectedRates = [...document.querySelectorAll('#rateFilterGroup input:checked')].map(el => el.value);
+            const selectedTypes = [...document.querySelectorAll('#typeFilterGroup input:checked')].map(el => el.value);
+
+            // Coupon range
+            const minCoupon = parseFloat(document.getElementById('minCoupon').value) || 0;
+            const maxCoupon = parseFloat(document.getElementById('maxCoupon').value) || 999;
+
+            // Investment grade filter
+            const investmentGradeOnly = document.getElementById('investmentGradeOnly').checked;
+            const IG_SP_RATINGS = ['BBB-', 'BBB', 'BBB+', 'A-', 'A', 'A+', 'AA-', 'AA', 'AA+', 'AAA'];
+            const IG_MOODY_RATINGS = ['Baa3', 'Baa2', 'Baa1', 'A3', 'A2', 'A1', 'Aa3', 'Aa2', 'Aa1', 'Aaa'];
+
             const minP = parseFloat(document.getElementById('minPrice').value) || 0;
             const maxP = parseFloat(document.getElementById('maxPrice').value) || 999999;
             const search = document.getElementById('tickerSearch').value.toUpperCase();
@@ -638,9 +667,24 @@
 
             const baseFilter = (i) => {
                 if (activeMode === 'preferred') {
-                    if (rate !== 'all' && i.rate !== rate) return false;
-                    if (type !== 'all' && i.type !== type) return false;
+                    // Multi-select rate filter
+                    if (selectedRates.length > 0 && !selectedRates.includes(i.rate)) return false;
+                    // Multi-select type filter
+                    if (selectedTypes.length > 0 && !selectedTypes.includes(i.type)) return false;
                     if (floatingOnly && !i.is_floating) return false;
+
+                    // Coupon filter - extract numeric value from coupon string (e.g., "6.50%")
+                    const couponStr = i.coupon || '';
+                    const couponMatch = couponStr.match(/([\\d.]+)/);
+                    const couponVal = couponMatch ? parseFloat(couponMatch[1]) : 0;
+                    if (couponVal < minCoupon || couponVal > maxCoupon) return false;
+
+                    // Investment grade filter
+                    if (investmentGradeOnly) {
+                        const spOk = IG_SP_RATINGS.includes(i.sp_rating);
+                        const moodyOk = IG_MOODY_RATINGS.includes(i.moody_rating);
+                        if (!spOk && !moodyOk) return false;
+                    }
                 } else {
                     const cefCat = document.getElementById('cefCategoryFilter').value;
                     if (cefCat !== 'all' && i.sector !== cefCat) return false;
