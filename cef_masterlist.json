@@ -816,11 +816,11 @@
         "type": "CEF"
     },
     "BCX": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "BGB": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "BGT": {
@@ -840,15 +840,15 @@
         "type": "CEF"
     },
     "BTT": {
-        "sector": "Mixed/Debt",
+        "sector": "Municipal Bond",
         "type": "CEF"
     },
     "BTZ": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "BXSL": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "DBL": {
@@ -856,7 +856,7 @@
         "type": "CEF"
     },
     "DSL": {
-        "sector": "Mixed/Debt",
+        "sector": "Municipal Bond",
         "type": "CEF"
     },
     "DSU": {
@@ -864,11 +864,11 @@
         "type": "CEF"
     },
     "EARN": {
-        "sector": "Mixed/Debt",
+        "sector": "Real Estate",
         "type": "CEF"
     },
     "ECC": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "EDF": {
@@ -880,7 +880,7 @@
         "type": "CEF"
     },
     "FFC": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "FRA": {
@@ -896,7 +896,7 @@
         "type": "CEF"
     },
     "GOF": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "GUG": {
@@ -908,11 +908,11 @@
         "type": "CEF"
     },
     "HPF": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "HPI": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "HPS": {
@@ -924,11 +924,11 @@
         "type": "CEF"
     },
     "ISD": {
-        "sector": "Mixed/Debt",
+        "sector": "Municipal Bond",
         "type": "CEF"
     },
     "JPC": {
-        "sector": "Mixed/Debt",
+        "sector": "Municipal Bond",
         "type": "CEF"
     },
     "KIO": {
@@ -936,7 +936,7 @@
         "type": "CEF"
     },
     "KYN": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "MSD": {
@@ -944,7 +944,7 @@
         "type": "CEF"
     },
     "NUV": {
-        "sector": "Mixed/Debt",
+        "sector": "Municipal Bond",
         "type": "CEF"
     },
     "PCN": {
@@ -964,7 +964,7 @@
         "type": "CEF"
     },
     "PHK": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "PIM": {
@@ -976,7 +976,7 @@
         "type": "CEF"
     },
     "RA": {
-        "sector": "Mixed/Debt",
+        "sector": "Real Estate",
         "type": "CEF"
     },
     "TEI": {
@@ -984,15 +984,15 @@
         "type": "CEF"
     },
     "THQ": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "THW": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "VVR": {
-        "sector": "Mixed/Debt",
+        "sector": "Equity/Core",
         "type": "CEF"
     },
     "WDI": {
