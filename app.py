@@ -26,6 +26,25 @@ def background_scan(mode):
     except Exception as e:
         modes_data[mode]["status"] = f"error: {str(e)}"
 
+def scheduled_scan_loop():
+    """Runs scan for both modes every 15 minutes."""
+    while True:
+        try:
+            print("[SCHEDULER] Starting background scan...")
+            scan_logs.clear()
+            
+            # 1. Preferred
+            background_scan("preferred")
+            
+            # 2. CEFs
+            background_scan("cef")
+            
+            print("[SCHEDULER] Scan complete. Sleeping for 15 mins.")
+            time.sleep(900) # 15 minutes
+        except Exception as e:
+            print(f"[SCHEDULER] Error: {e}")
+            time.sleep(60) # Retry in 1 min if error
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -83,5 +102,9 @@ def remove_ticker(ticker):
     return jsonify({"message": "404"}), 404
 
 if __name__ == '__main__':
+    # Start background scheduler
+    t = threading.Thread(target=scheduled_scan_loop, daemon=True)
+    t.start()
+    
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

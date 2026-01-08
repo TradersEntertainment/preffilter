@@ -358,8 +358,8 @@
         </div>
 
         <div class="actions">
-            <button id="scanBtn" class="primary-btn" onclick="triggerScan()">Run Analysis Scan</button>
-            <div id="statusIndicator" class="status-idle">System Idle</div>
+            <button id="scanBtn" class="primary-btn" onclick="triggerScan()">Force Refresh</button>
+            <div id="statusIndicator" class="status-idle">Auto-scanning...</div>
         </div>
 
         <div class="terminal-container">
@@ -579,7 +579,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ threshold })
             });
-            poll();
+            // poll();
         }
 
         async function poll() {
@@ -661,7 +661,7 @@
                 if (checks[7]) results.push((mode === 'buy' ? i.dL7 : i.dH7) <= threshold);
                 if (checks[30]) results.push((mode === 'buy' ? i.dL30 : i.dH30) <= threshold);
                 if (checks[60]) results.push((mode === 'buy' ? i.dL60 : i.dH60) <= threshold);
-                if (results.length === 0) return true;
+                if (results.length === 0) return false;
                 return logic === 'and' ? results.every(v => v === true) : results.some(v => v === true);
             };
 
@@ -786,6 +786,7 @@
         }
 
         poll();
+        setInterval(poll, 7000); // Poll every 7s
 
         // Mom-Destroyer Logic
         if (localStorage.getItem('hideMomModal') === 'true') {
