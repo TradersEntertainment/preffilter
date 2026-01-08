@@ -157,8 +157,10 @@ def run_full_analysis(threshold=None, mode="preferred"):
         "Municipal Bond": ["XMPT", "MUB"],
         "Equity/Core": ["QQQ", "SPY"],
         "Utility": ["XLU"],
+        "Utilities": ["XLU"],
         "Real Estate": ["XLRE", "VNQ"],
-        "Mixed/Debt": ["SPY"]
+        "Mixed/Debt": ["SPY"],
+        "Other": ["SPY"]
     }
     
     benchmark_symbols = []
@@ -309,7 +311,7 @@ def run_full_analysis(threshold=None, mode="preferred"):
             # Master Metadata enrichment
             m_data = master_metadata.get(orig, {})
             coupon = m_data.get("coupon", 0.0)
-            sector = m_data.get("sector", "Other")
+            sector = m_data.get("sector", "Other").strip()
             sp_rating = m_data.get("sp_rating", "NR")
             mid_rating = m_data.get("moody_rating", "NR")
             rate_type = m_data.get("rate", "Fix")
@@ -350,9 +352,10 @@ def run_full_analysis(threshold=None, mode="preferred"):
                     avg_etf_dip = sum(etf_dips) / len(etf_dips)
                     cef_dip = (h60 - current) / h60 # How much it dipped from 60D high
                     raw_divergence = (cef_dip - avg_etf_dip)
+                    raw_divergence = (cef_dip - avg_etf_dip)
                     display_divergence = f"{raw_divergence*100:+.1f}%"
-                # else:
-                #    log_msg(f"Warning: No benchmarks for {v} (Sector: {sector}). Expected: {relevant_etfs}, Found: {list(benchmarks_dL60.keys())}")
+                else:
+                    log_msg(f"Warning: No benchmarks for {v} (Sector: '{sector}'). Expected: {relevant_etfs}, Found: {list(benchmarks_dL60.keys())}")
             else:
                 # Preferred logic: (Coupon * FaceValue) / CurrentPrice. Assuming $25 face value.
                 cur_yield = (coupon * 25.0 / current) if current > 0 and coupon > 0 else 0.0
