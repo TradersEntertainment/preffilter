@@ -149,7 +149,19 @@ def run_full_analysis(threshold=None, mode="preferred"):
                                 symbol_cache[o] = v
                                 resolved_map[o] = v
                                 break
-                        except: pass
+                            else:
+                                raise Exception("Empty info")
+                        except:
+                            # Fallback: trust the ticker exists, use defaults
+                            # Only do this if we haven't found a better match yet
+                            if o not in resolved_map:
+                                metadata_cache[v] = {"name": v, "sector": "Other", "type": "Unknown", "rate": "Fixed", "dividendRate": 0.0}
+                                symbol_cache[o] = v
+                                resolved_map[o] = v
+                                # Don't break yet, maybe next possible match is better? 
+                                # Actually for efficiency, if we accepted it as fallback, let's keep it but keep trying?
+                                # No, simplified: just mark it resolved.
+                                break
             except: pass
             return
 
