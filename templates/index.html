@@ -524,11 +524,19 @@
                             Calc</button>
                     </div>
                 </div>
-                <div>
+                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                     <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer;">
                         <input type="checkbox" id="calcIgOnly" checked onchange="calculateFairValue()">
                         <span>⭐ Use Investment Grade Peers Only</span>
                     </label>
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <label style="font-size: 0.85rem; opacity: 0.7;">Sector:</label>
+                        <select id="calcSector" onchange="calculateFairValue()"
+                            style="padding: 4px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 4px; max-width: 150px;">
+                            <option value="all">Any</option>
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -546,14 +554,19 @@
                 </div>
 
                 <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-top: 10px;">
-                    <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px;">Peer Group (Investment Grade)
-                    </div>
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px;">Peer Group</div>
                     <div id="calcPeerStats" style="font-size: 0.9rem;">
                         Avg Price: $25.00 | Count: 0 | Range: 5.25% - 6.25%
                     </div>
                     <div id="calcPeerList"
-                        style="font-size: 0.75rem; opacity: 0.5; margin-top: 5px; max-height: 50px; overflow-y: auto;">
+                        style="font-size: 0.75rem; opacity: 0.5; margin-top: 5px; max-height: 80px; overflow-y: auto;">
                         <!-- Peer list here -->
+                    </div>
+                    <div style="margin-top: 8px; display: flex; gap: 5px;">
+                        <input type="text" id="manualPeerInput" placeholder="+ Add Ticker"
+                            style="padding: 4px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3); color: white; width: 100px; font-size: 0.8rem;">
+                        <button onclick="addManualPeer()" class="primary-btn"
+                            style="padding: 4px 8px; font-size: 0.8rem;">Add</button>
                     </div>
                 </div>
             </div>
@@ -862,7 +875,26 @@
 
         let currentPeers = []; // Global to track calculator peers
         let excludedPeers = new Set();
+        let manualPeersList = new Set(); // Manually added tickers
         let currentTargetTicker = "";
+
+        function addManualPeer() {
+            const input = document.getElementById('manualPeerInput');
+            const ticker = input.value.toUpperCase().trim();
+            if (!ticker) return;
+
+            // Verify it exists in data
+            const prefData = fullModesData['preferred'].all_data || [];
+            const exists = prefData.find(i => i.ticker === ticker || i.ticker.replace('-P', '-') === ticker);
+
+            if (exists) {
+                manualPeersList.add(exists.ticker);
+                input.value = '';
+                calculateFairValue(false); // Trigger full recalc to include new manual peer
+            } else {
+                alert('Ticker not found in database!');
+            }
+        }
 
         function calculateFairValue(isRecalc = false) {
             const tickerInput = document.getElementById('calcTicker').value.toUpperCase().trim();
@@ -886,26 +918,60 @@
                 'Baa3', 'Baa2', 'Baa1', 'A3', 'A2', 'A1', 'Aa3', 'Aa2', 'Aa1', 'Aaa'];
 
             const useIgOnly = document.getElementById('calcIgOnly').checked;
+            const sectorFilter = document.getElementById('calcSector').value;
+
+            // Lazy populate sectors if needed
+            const sectorSelect = document.getElementById('calcSector');
+            if (sectorSelect.options.length <= 1 && prefData.length > 0) {
+                const sectors = [...new Set(prefData.map(i => i.sector).filter(s => s))].sort();
+                sectors.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s;
+                    opt.innerText = s;
+                    sectorSelect.appendChild(opt);
+                });
+            }
 
             // Only find peers if this is a fresh calculation or parameters changed
-            // We treat every call without isRecalc=true as a fresh search start
             if (!isRecalc) {
                 currentTargetTicker = target.ticker;
                 const targetCoupon = target.raw_coupon || 0;
                 const minC = targetCoupon - (tolerance / 100);
                 const maxC = targetCoupon + (tolerance / 100);
 
-                currentPeers = prefData.filter(i => {
+                const autoPeers = prefData.filter(i => {
                     if (i.ticker === target.ticker) return false;
 
                     if (useIgOnly) {
                         const isIG = IG_RATINGS.includes(i.sp_rating) || IG_RATINGS.includes(i.moody_rating);
                         if (!isIG) return false;
+                        // Manual peers ignore IG filter? No, if user adds them manually they want them.
+                        // But here we are filtering "Auto" peers.
                     }
+
+                    if (sectorFilter !== 'all' && i.sector !== sectorFilter) return false;
 
                     const c = i.raw_coupon || 0;
                     return c >= minC && c <= maxC;
                 });
+
+                // Merge Auto + Manual
+                // manualPeers is a list of Tickers. We need to find their objects.
+                const manualPeerObjs = [];
+                manualPeersList.forEach(t => {
+                    const p = prefData.find(x => x.ticker === t);
+                    if (p && p.ticker !== target.ticker) manualPeerObjs.push(p);
+                });
+
+                // Combine and Dedupe
+                const combined = [...autoPeers, ...manualPeerObjs];
+                const seen = new Set();
+                currentPeers = combined.filter(item => {
+                    if (seen.has(item.ticker)) return false;
+                    seen.add(item.ticker);
+                    return true;
+                });
+
                 excludedPeers.clear();
                 renderPeerList();
             }
