@@ -450,6 +450,7 @@ def run_full_analysis(threshold=None, mode="preferred"):
                 "divergence": display_divergence,
                 "raw_divergence": raw_divergence,
                 "raw_yield": float(cur_yield),
+                "raw_coupon": coupon, # Add raw numeric coupon for frontend index calc
                 "streak_type": streak_type,
                 "streak_count": streak_count,
                 "l60": l60, "h60": h60, "l30": l30, "h30": h30, "l7": l7, "h7": h7,
