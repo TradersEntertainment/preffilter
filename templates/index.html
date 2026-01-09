@@ -519,61 +519,64 @@
                             style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 4px;"
                             oninput="calculateFairValue()">
                     </div>
+                    <div style="flex: 0 0 auto; display: flex; align-items: flex-end;">
+                        <button onclick="calculateFairValue()" class="primary-btn" style="height: 35px;">Search /
+                            Calc</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="calcResult" style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div>
+                        <h3 id="calcTickerDisplay" style="margin: 0; color: var(--accent);">JPM-L</h3>
+                        <div id="calcTickerDetail" style="font-size: 0.8rem; opacity: 0.7;">Price: $25.00 | Coupon:
+                            5.75%</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div id="calcIndexValue" style="font-size: 1.5rem; font-weight: bold;">1.00</div>
+                        <div id="calcStatus" style="font-size: 0.9rem; font-weight: bold;">FAIR VALUE</div>
+                    </div>
                 </div>
 
-                <div id="calcResult"
-                    style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; display: none;">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <div>
-                            <h3 id="calcTickerDisplay" style="margin: 0; color: var(--accent);">JPM-L</h3>
-                            <div id="calcTickerDetail" style="font-size: 0.8rem; opacity: 0.7;">Price: $25.00 | Coupon:
-                                5.75%</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div id="calcIndexValue" style="font-size: 1.5rem; font-weight: bold;">1.00</div>
-                            <div id="calcStatus" style="font-size: 0.9rem; font-weight: bold;">FAIR VALUE</div>
-                        </div>
+                <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-top: 10px;">
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px;">Peer Group (Investment Grade)
                     </div>
-
-                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-top: 10px;">
-                        <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px;">Peer Group (Investment Grade)
-                        </div>
-                        <div id="calcPeerStats" style="font-size: 0.9rem;">
-                            Avg Price: $25.00 | Count: 0 | Range: 5.25% - 6.25%
-                        </div>
-                        <div id="calcPeerList"
-                            style="font-size: 0.75rem; opacity: 0.5; margin-top: 5px; max-height: 50px; overflow-y: auto;">
-                            <!-- Peer list here -->
-                        </div>
+                    <div id="calcPeerStats" style="font-size: 0.9rem;">
+                        Avg Price: $25.00 | Count: 0 | Range: 5.25% - 6.25%
+                    </div>
+                    <div id="calcPeerList"
+                        style="font-size: 0.75rem; opacity: 0.5; margin-top: 5px; max-height: 50px; overflow-y: auto;">
+                        <!-- Peer list here -->
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- STREAK SECTION -->
-        <div class="card glass" style="margin-top: 20px; border-top: 1px solid rgba(255, 107, 107, 0.2);">
-            <div class="card-header">
-                <h2>🔥 Consecutive Streaks (Price Momentum)</h2>
-            </div>
-            <div class="table-scroll">
-                <table id="streakTable">
-                    <thead>
-                        <tr>
-                            <th onclick="setSort('ticker')">Security</th>
-                            <th onclick="setSort('price')">Price</th>
-                            <th onclick="setSort('streak_count')">Streak</th>
-                            <th onclick="setSort('raw_yield')">Yield</th>
-                            <th onclick="setSort('sp_rating')">S&P / Moody</th>
-                            <th onclick="setSort('call_date')">Call</th>
-                            <th onclick="setSort('maturity')">Mat</th>
-                            <th onclick="setSort('sector')">Sector</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
+    <!-- STREAK SECTION -->
+    <div class="card glass" style="margin-top: 20px; border-top: 1px solid rgba(255, 107, 107, 0.2);">
+        <div class="card-header">
+            <h2>🔥 Consecutive Streaks (Price Momentum)</h2>
         </div>
+        <div class="table-scroll">
+            <table id="streakTable">
+                <thead>
+                    <tr>
+                        <th onclick="setSort('ticker')">Security</th>
+                        <th onclick="setSort('price')">Price</th>
+                        <th onclick="setSort('streak_count')">Streak</th>
+                        <th onclick="setSort('raw_yield')">Yield</th>
+                        <th onclick="setSort('sp_rating')">S&P / Moody</th>
+                        <th onclick="setSort('call_date')">Call</th>
+                        <th onclick="setSort('maturity')">Mat</th>
+                        <th onclick="setSort('sector')">Sector</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
     </div>
 
     <script>
