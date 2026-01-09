@@ -569,6 +569,18 @@
                             style="padding: 4px 8px; font-size: 0.8rem;">Add</button>
                     </div>
                 </div>
+
+                <!-- Historical Stats -->
+                <div id="calcHistory"
+                    style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-top: 10px; display:none;">
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px;">Historical Index Context (90 Days)
+                    </div>
+                    <div id="calcHistoryContent"
+                        style="font-size: 0.9rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+                        <!-- Populated by JS -->
+                        Loading...
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1014,6 +1026,66 @@
             document.getElementById('calcPeerStats').innerHTML = `
                 Avg Peer Price: <b>$${avgPrice.toFixed(2)}</b> | 
                 Active Count: <b>${activePeers.length}</b> / ${currentPeers.length}`;
+
+            // Trigger Historical Stats (Debounced)
+            clearTimeout(histDebounce);
+            if (activePeers.length > 0) {
+                document.getElementById('calcHistory').style.display = 'block';
+                document.getElementById('calcHistoryContent').innerHTML = 'Loading stats...';
+                histDebounce = setTimeout(() => {
+                    fetchHistoricalStats(target.ticker, activePeers.map(p => p.ticker));
+                }, 1000); // 1s wait
+            } else {
+                document.getElementById('calcHistory').style.display = 'none';
+            }
+        }
+
+        let histDebounce = null;
+        async function fetchHistoricalStats(target, peers) {
+            try {
+                const res = await fetch('/api/calc-stats', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target, peers })
+                });
+                const data = await res.json();
+
+                if (data.error) {
+                    document.getElementById('calcHistoryContent').innerHTML = `<span style="color:red">${data.error}</span>`;
+                    return;
+                }
+
+                // Format Data
+                // l7, h7, l30, h30, l60, h60, l90, h90, current
+                const fmt = (v) => v ? v.toFixed(3) : '-';
+                const color = (val) => {
+                    if (!val || !data.current) return 'inherit';
+                    if (data.current < val) return '#4ade80'; // below historic low? Cheap
+                    if (data.current > val) return '#f87171';
+                    return 'inherit';
+                };
+
+                const html = `
+                    <div>Current Index: <b>${data.current}</b></div>
+                    <div></div>
+                    
+                    <div style="opacity:0.7">7 Days:</div>
+                    <div>L: ${fmt(data.l7)} - H: ${fmt(data.h7)}</div>
+                    
+                    <div style="opacity:0.7">30 Days:</div>
+                    <div>L: ${fmt(data.l30)} - H: ${fmt(data.h30)}</div>
+                    
+                    <div style="opacity:0.7">60 Days:</div>
+                    <div>L: ${fmt(data.l60)} - H: ${fmt(data.h60)}</div>
+                    
+                    <div style="opacity:0.7">90 Days:</div>
+                    <div>L: ${fmt(data.l90)} - H: ${fmt(data.h90)}</div>
+                `;
+                document.getElementById('calcHistoryContent').innerHTML = html;
+            } catch (e) {
+                console.error(e);
+                document.getElementById('calcHistoryContent').innerText = "Error loading stats";
+            }
         }
 
         function renderPeerList() {
