@@ -503,7 +503,7 @@
         <!-- FAIR VALUE CALCULATOR -->
         <div class="card glass" style="margin-top: 20px; border-top: 1px solid rgba(100, 200, 255, 0.2);">
             <div class="card-header">
-                <h2>⚖️ Fair Value Calculator (IG Only)</h2>
+                <h2>⚖️ Fair Value Calculator</h2>
             </div>
             <div style="padding: 15px; display: flex; flex-direction: column; gap: 15px;">
                 <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
@@ -523,6 +523,12 @@
                         <button onclick="calculateFairValue()" class="primary-btn" style="height: 35px;">Search /
                             Calc</button>
                     </div>
+                </div>
+                <div>
+                    <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer;">
+                        <input type="checkbox" id="calcIgOnly" checked onchange="calculateFairValue()">
+                        <span>⭐ Use Investment Grade Peers Only</span>
+                    </label>
                 </div>
             </div>
 
@@ -879,8 +885,11 @@
             const IG_RATINGS = ['BBB-', 'BBB', 'BBB+', 'A-', 'A', 'A+', 'AA-', 'AA', 'AA+', 'AAA',
                 'Baa3', 'Baa2', 'Baa1', 'A3', 'A2', 'A1', 'Aa3', 'Aa2', 'Aa1', 'Aaa'];
 
-            // Only find peers if this is a fresh calculation (not just toggling a checkbox)
-            if (!isRecalc || currentTargetTicker !== target.ticker) {
+            const useIgOnly = document.getElementById('calcIgOnly').checked;
+
+            // Only find peers if this is a fresh calculation or parameters changed
+            // We treat every call without isRecalc=true as a fresh search start
+            if (!isRecalc) {
                 currentTargetTicker = target.ticker;
                 const targetCoupon = target.raw_coupon || 0;
                 const minC = targetCoupon - (tolerance / 100);
@@ -888,8 +897,12 @@
 
                 currentPeers = prefData.filter(i => {
                     if (i.ticker === target.ticker) return false;
-                    const isIG = IG_RATINGS.includes(i.sp_rating) || IG_RATINGS.includes(i.moody_rating);
-                    if (!isIG) return false;
+
+                    if (useIgOnly) {
+                        const isIG = IG_RATINGS.includes(i.sp_rating) || IG_RATINGS.includes(i.moody_rating);
+                        if (!isIG) return false;
+                    }
+
                     const c = i.raw_coupon || 0;
                     return c >= minC && c <= maxC;
                 });
